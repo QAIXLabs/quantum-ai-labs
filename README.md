@@ -57,29 +57,21 @@ Settings, watchlists, alerts, agent chat history, and swap history are kept in t
 
 ## Run locally
 
-Requires Node.js 22.22 or later (react-router 8 sets this minimum). npm comes with Node.
+Requirements: Node.js 22.22 or later (react-router 8 sets this minimum). npm comes with Node. No database, Docker, or `.env` file is needed.
 
 ```bash
-npm ci
+npm ci        # install exact dependency versions from package-lock.json
+npm run dev   # start the app at http://localhost:5173
 ```
 
-```bash
-npm run dev
-```
-
-```bash
-npm run lint
-```
-
-```bash
-npm test
-```
-
-```bash
-npm run build
-```
-
-`npm run dev` serves the app at http://localhost:5173. `npm run build` type-checks with `tsc -b` and writes the static site to `dist/`. You can preview that build with `npm run preview`.
+| Script | What it does |
+| --- | --- |
+| `npm run dev` | Start the Vite dev server at http://localhost:5173 |
+| `npm run dev:demo` | Same, with fictional demo data for the Quantum Agent chart (see below) |
+| `npm run build` | Type-check with `tsc -b` and write the static site to `dist/` |
+| `npm run preview` | Serve the `dist/` build locally |
+| `npm run lint` | Lint with Oxlint |
+| `npm test` | Run the unit tests with Node's built-in test runner |
 
 Without the API, the content pages, navigation, layout, 3D visuals, and legal pages all work. Every tool page also loads. The parts that need data show their unavailable state instead:
 
@@ -92,13 +84,7 @@ Without the API, the content pages, navigation, layout, 3D visuals, and legal pa
 
 The local dev and preview servers answer every `/api/*` request with HTTP 503 and a short JSON message, so the tools fail cleanly rather than trying to parse the app's HTML. Nothing points at the production API.
 
-To see the Quantum Agent chart without the API, run:
-
-```bash
-npm run dev:demo
-```
-
-In demo mode the agent is shown as Online. Any question gets the same canned reply with a chart of a fictional "DEMO" coin. The candles are generated from a fixed formula in `demo/fixtures.ts`, labeled as demo data, and never come from a real market. Every other route, including the home page prices, still returns 503. Demo data is served only by the local Vite server and is never included in `npm run build`.
+To see the Quantum Agent chart without the API, use `npm run dev:demo`. In demo mode the agent is shown as Online. Any question gets the same canned reply with a chart of a fictional "DEMO" coin. The candles are generated from a fixed formula in `demo/fixtures.ts`, labeled as demo data, and never come from a real market. Every other route, including the home page prices, still returns 503. Demo data is served only by the local Vite server and is never included in `npm run build`.
 
 ## Security and configuration
 
@@ -126,3 +112,11 @@ Open an issue on this repository and include:
 - console errors or failed network requests, with anything sensitive removed
 
 Never post a seed phrase, recovery phrase, private key, API key, or access token, not even a partial one. Leave out personal data such as email addresses, and cut exchange order IDs or wallet addresses unless the bug can't be reproduced without them. If you think you've found a security problem, please don't describe it in a public issue. Send a direct message to the X or Telegram account above and ask for a private channel.
+
+## License
+
+Copyright © 2026 QAIXLabs. All rights reserved.
+
+This repository is public so the frontend can be reviewed. No license is granted. You may not copy, modify, distribute, or reuse this code, in whole or in part, without written permission from QAIXLabs. The names "Quantum AI Labs" and "QAI", and any related logos, may not be used without permission.
+
+Third-party components keep their own licenses. See [NOTICE](NOTICE).
